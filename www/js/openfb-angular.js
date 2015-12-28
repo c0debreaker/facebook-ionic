@@ -69,20 +69,26 @@ angular.module('openfb', [])
             logout();
 
             // Check if an explicit oauthRedirectURL has been provided in init(). If not, infer the appropriate value
+            console.log('oauthRedirectURL', oauthRedirectURL);
             if (!oauthRedirectURL) {
+              console.log('entered');
                 if (runningInCordova) {
                     oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
                 } else {
                     // Trying to calculate oauthRedirectURL based on the current URL.
                     var index = document.location.href.indexOf('index.html');
                     if (index > 0) {
+                      console.log('success!!!');
                         oauthRedirectURL = document.location.href.substring(0, index) + 'oauthcallback.html';
                     } else {
                         return alert("Can't reliably infer the OAuth redirect URI. Please specify it explicitly in openFB.init()");
                     }
                 }
             }
-
+            console.log(FB_LOGIN_URL);
+            console.log('client_id=' + fbAppId);
+            console.log('redirect_uri=' + oauthRedirectURL);
+            console.log('scope=' + fbScope);
             loginWindow = window.open(FB_LOGIN_URL + '?client_id=' + fbAppId + '&redirect_uri=' + oauthRedirectURL +
                 '&response_type=token&display=popup&scope=' + fbScope, '_blank', 'location=no');
 
